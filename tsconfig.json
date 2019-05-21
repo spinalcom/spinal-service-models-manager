@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "es2015",
+    "module": "commonjs",
+    "outDir": "dist",
+    "declaration": true,
+    "declarationDir": "./declarations",
+    "sourceMap": true,
+    "moduleResolution": "node"
+  },
+  "files": [
+    "./node_modules/@types/node/index.d.ts",
+    "./node_modules/spinal-core-connectorjs_type/declarations/SpinalModel.d.ts"
+    ],
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

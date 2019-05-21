@@ -1,0 +1,25 @@
+{
+  "name": "spinal-models-manager-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "declaration/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "@types/forge-apis": "^0.4.0",
+    "@types/forge-viewer": "^6.4.1",
+    "@types/node": "^10.12.12",
+    "@types/three": "^0.103.2",
+    "jsdoc-to-markdown": "^4.0.1",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.2.2"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "spinal-core-connectorjs_type": "git+https://github.com/spinalcom/spinal-core-connectorjs_type.git"
+  }
+}
