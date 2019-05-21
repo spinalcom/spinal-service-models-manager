@@ -46,7 +46,6 @@ class ModelsManagerService {
         return this.initialized;
     }
     createModelMetaData(path, model, partId) {
-        console.log(path, model.id);
         if (!this.modelsMetas[model.id])
             this.modelsMetas[model.id] = new ModelMetaData_1.ModelMetaData(path, model, partId);
     }
@@ -60,13 +59,13 @@ class ModelsManagerService {
             path = window.location.origin + path;
         return new Promise((resolve, reject) => {
             const part = partId;
-            const _onGeometryLoaded = event => {
+            const _onGeometryLoaded = (modelId, event) => {
                 this.viewer.removeEventListener(Autodesk.Viewing.GEOMETRY_LOADED_EVENT, _onGeometryLoaded);
-                return resolve(this.modelsMetas[event.model.id]);
+                return resolve(this.modelsMetas[modelId]);
             };
             // @ts-ignore
             this.viewer.loadModel(path, {}, (m) => {
-                this.viewer.addEventListener(Autodesk.Viewing.GEOMETRY_LOADED_EVENT, _onGeometryLoaded);
+                this.viewer.addEventListener(Autodesk.Viewing.GEOMETRY_LOADED_EVENT, _onGeometryLoaded.bind(this, m.id));
                 // @ts-ignore
                 this.createModelMetaData(path, m, part);
             }, (errorCode, errorMessage, statusCode, statusText) => {
@@ -113,25 +112,12 @@ class ModelsManagerService {
         this.emit('translate', event.model.id);
     }
     onRotate(event) {
-        console.log(this.modelsMetas, event.model.id);
         this.modelsMetas[event.model.id].setRotation({
             x: event.rotation.x,
             y: event.rotation.y,
             z: event.rotation.z
         });
         this.emit('rotate', event.model.id);
-    }
-    setTranslateHelperSelection(modelId) {
-        if (this.modelsMetas.hasOwnProperty(modelId)) {
-            const model = this.modelsMetas[modelId].model;
-            this.translateHelper.setSelection({ model: model });
-        }
-    }
-    setRotateHelperSelection(modelId) {
-        if (this.modelsMetas.hasOwnProperty(modelId)) {
-            const model = this.modelsMetas[modelId].model;
-            this.rotateHelper.setSelection({ model: model });
-        }
     }
 }
 exports.default = ModelsManagerService;
