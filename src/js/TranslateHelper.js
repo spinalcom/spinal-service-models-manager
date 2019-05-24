@@ -109,8 +109,6 @@ export default class TranslateHelper extends EventsEmitter {
   }
   
   onTxChange(m) {
-    console.log(m);
-    
     if (this.isDragging && this.transformControlTx.visible) {
       
       let position;
