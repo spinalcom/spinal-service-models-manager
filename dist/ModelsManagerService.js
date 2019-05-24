@@ -28,6 +28,20 @@ class ModelsManagerService {
         this.rotateHelper = new RotateHelper_1.default(this.viewer);
         this.rotateHelper.on('rotate', this.onRotate.bind(this));
         this.translateHelper.on('translate', this.onTranslate.bind(this));
+        this.viewer.addEventListener(Autodesk.Viewing.AGGREGATE_SELECTION_CHANGED_EVENT, (selection) => {
+            if (selection.selections.length > 0) {
+                ModelsManagerService._setCurrentModel(selection.selections[0].model);
+            }
+        });
+    }
+    static _setCurrentModel(model) {
+        ModelsManagerService._getViewer().impl.model = model;
+    }
+    static _getCurrentModel() {
+        return window.spinal.ForgeViewer.viewer.model;
+    }
+    static _getViewer() {
+        return window.spinal.ForgeViewer.viewer;
     }
     isInitialize() {
         return typeof this.viewer !== "undefined";
@@ -102,6 +116,11 @@ class ModelsManagerService {
             return;
         }
         this.modelsMetas[modelId].partId = partId;
+    }
+    getPartId(modelId) {
+        if (this.modelsMetas.hasOwnProperty(modelId)) {
+            return this.modelsMetas[modelId].partId;
+        }
     }
     onTranslate(event) {
         this.modelsMetas[event.model.id].setTranslation({
